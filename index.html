@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keri Systems | Amazon Business Storefront</title>
+<style>
+:root {
+  --dk: #131921;
+  --dk2: #232f3e;
+  --teal: #82c0c7;
+  --teal-hover: #5a9da6;
+  --teal-deep: #1a3a4a;
+  --link: #007185;
+  --link-hover: #c7511f;
+  --orange: #febd69;
+  --yellow: #ffd814;
+  --yellow-hover: #f7ca00;
+  --border: #d5d9d9;
+  --text: #0f1111;
+  --muted: #565959;
+  --bg: #f5f7f9;
+  --bg-alt: #fafafa;
+  --card-radius: 12px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,.1);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+  --transition: all .2s ease;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Amazon Ember', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: #fff; color: var(--text); font-size: 14px; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; cursor: pointer; }
+img { display: block; max-width: 100%; }
+
+/* ── AMAZON HEADER ── */
+.hd { background: var(--dk); padding: 8px 20px; display: flex; align-items: center; gap: 14px; }
+.hd-logo { flex-shrink: 0; }
+.hd-logo b { color: #00a8e1; font-size: 22px; font-style: italic; }
+.hd-logo small { color: #f90; font-size: 13px; font-weight: 700; font-style: italic; display: block; margin-top: -3px; }
+.hd-loc { color: #ccc; font-size: 11px; flex-shrink: 0; }
+.hd-loc strong { color: #fff; font-size: 13px; display: block; }
+.hd-search { flex: 1; display: flex; height: 40px; border-radius: 4px; overflow: hidden; }
+.hd-search select { background: #e6e6e6; border: none; padding: 0 8px; font-size: 11px; }
+.hd-search input { flex: 1; border: none; padding: 0 12px; font-size: 15px; outline: none; }
+.hd-search button { background: var(--orange); border: none; width: 46px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.hd-search svg { width: 20px; height: 20px; }
+.hd-r { display: flex; gap: 18px; align-items: center; flex-shrink: 0; }
+.hd-r div { color: #fff; font-size: 11px; line-height: 1.3; white-space: nowrap; }
+.hd-r div strong { font-size: 13px; display: block; }
+.hd-r .cart { font-size: 13px; font-weight: 700; }
+.hd-r .cart span { color: #f90; font-size: 18px; }
+.hd-sub { background: var(--dk2); padding: 6px 20px; display: flex; gap: 18px; overflow-x: auto; }
+.hd-sub a { color: #fff; font-size: 13px; white-space: nowrap; }
+.hd-sub a:hover { text-decoration: underline; }
+
+/* ── STORE NAV ── */
+.sn { background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; height: 52px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.sn-brand { display: flex; align-items: center; gap: 10px; padding-right: 20px; border-right: 1px solid var(--border); height: 100%; }
+.sn-brand img { height: 26px; }
+.sn-brand span { font-size: 18px; font-weight: 700; color: var(--teal); letter-spacing: -.3px; }
+.sn-links { display: flex; gap: 0; margin-left: 8px; height: 100%; }
+.sn-links a { display: flex; align-items: center; padding: 0 16px; font-size: 14px; font-weight: 500; color: var(--text); height: 100%; border-bottom: 3px solid transparent; transition: var(--transition); }
+.sn-links a:hover, .sn-links a.active { border-bottom-color: var(--teal); color: var(--teal); }
+
+/* ── HERO ── */
+.hero { width: 100%; position: relative; overflow: hidden; height: 420px; background: var(--teal-deep); }
+.hero img { width: 100%; height: 100%; object-fit: cover; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(26,58,74,.92) 0%, rgba(26,58,74,.7) 30%, rgba(26,58,74,.3) 55%, transparent 75%); display: flex; align-items: center; padding-left: 72px; }
+.hero-overlay .brand { font-size: 14px; font-weight: 600; color: var(--teal); margin-bottom: 12px; letter-spacing: 3px; text-transform: uppercase; }
+.hero-overlay h1 { font-size: 52px; font-weight: 200; color: #fff; line-height: 1.05; letter-spacing: -1px; }
+.hero-overlay h1 em { font-weight: 400; font-style: italic; }
+.hero-overlay .hero-sub { font-size: 16px; color: rgba(255,255,255,.8); margin-top: 16px; max-width: 420px; line-height: 1.5; }
+.hero-overlay .hero-btn { display: inline-block; margin-top: 24px; background: var(--teal); color: #fff; font-size: 14px; font-weight: 700; padding: 12px 32px; border-radius: 24px; transition: var(--transition); letter-spacing: .3px; }
+.hero-overlay .hero-btn:hover { background: var(--teal-hover); transform: translateY(-1px); }
+
+/* ── SECTIONS ── */
+.section { padding: 48px 24px; max-width: 1440px; margin: 0 auto; }
+.section-alt { background: var(--bg); }
+.section-title { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -.5px; }
+.section-subtitle { font-size: 15px; color: var(--muted); margin-bottom: 32px; font-weight: 400; }
+
+/* ── CATEGORY GRID ── */
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.cat-card { background: #fff; border-radius: var(--card-radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); cursor: pointer; border: 1px solid transparent; }
+.cat-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: var(--teal); }
+.cat-card-img { aspect-ratio: 1; background: #f8f8f8; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.cat-card-img img { max-height: 160px; object-fit: contain; }
+.cat-card-info { padding: 14px 16px; border-top: 1px solid #f0f0f0; text-align: center; }
+.cat-card-info h3 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.cat-card-info p { font-size: 12px; color: var(--muted); }
+
+/* ── SHOP BY INTEREST ── */
+.interest-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-bottom: 32px; align-items: stretch; }
+.interest-row.reverse { grid-template-columns: 1fr 1.2fr; }
+.interest-row.reverse .interest-hero { order: 2; }
+.interest-row.reverse .interest-products { order: 1; }
+.interest-hero { border-radius: var(--card-radius); overflow: hidden; position: relative; min-height: 340px; }
+.interest-hero img { width: 100%; height: 100%; object-fit: cover; }
+.interest-hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 24px; background: linear-gradient(transparent, rgba(0,0,0,.7)); }
+.interest-hero-overlay h3 { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.interest-hero-overlay p { color: rgba(255,255,255,.85); font-size: 13px; }
+.interest-products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.interest-prod-card { background: #fff; border-radius: var(--card-radius); padding: 20px 12px 14px; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid #eee; }
+.interest-prod-card:hover { box-shadow: var(--shadow-md); border-color: var(--teal); }
+.interest-prod-card img { height: 100px; object-fit: contain; margin-bottom: 10px; }
+.interest-prod-card span { font-size: 12px; font-weight: 600; text-align: center; line-height: 1.3; }
+
+/* ── FULL-WIDTH BANNER ── */
+.fw-banner { border-radius: var(--card-radius); overflow: hidden; position: relative; margin-bottom: 32px; }
+.fw-banner img { width: 100%; display: block; }
+.fw-banner-overlay { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 56px; background: linear-gradient(90deg, rgba(26,58,74,.85) 0%, rgba(26,58,74,.5) 40%, transparent 65%); }
+.fw-banner-overlay h3 { color: #fff; font-size: 28px; font-weight: 700; line-height: 1.2; max-width: 400px; }
+.fw-banner-overlay p { color: rgba(255,255,255,.85); font-size: 14px; margin-top: 8px; max-width: 360px; }
+.fw-banner-overlay .btn { display: inline-block; margin-top: 16px; background: var(--yellow); color: var(--text); font-size: 13px; font-weight: 700; padding: 10px 28px; border-radius: 20px; transition: var(--transition); }
+.fw-banner-overlay .btn:hover { background: var(--yellow-hover); }
+
+/* ── SPLIT BANNER ── */
+.split-banner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.split-card { border-radius: var(--card-radius); overflow: hidden; position: relative; min-height: 240px; }
+.split-card img { width: 100%; height: 100%; object-fit: cover; }
+.split-card-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; background: linear-gradient(transparent 40%, rgba(0,0,0,.7)); }
+.split-card-overlay h4 { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.split-card-overlay p { color: rgba(255,255,255,.8); font-size: 13px; }
+
+/* ── MEETING / SOLUTIONS GRID ── */
+.meeting-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.meeting-card { border-radius: var(--card-radius); overflow: hidden; position: relative; aspect-ratio: 4/3; cursor: pointer; }
+.meeting-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.meeting-card:hover img { transform: scale(1.05); }
+.meeting-card-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px; background: linear-gradient(transparent, rgba(0,0,0,.75)); }
+.meeting-card-overlay h4 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.meeting-card-overlay p { color: rgba(255,255,255,.8); font-size: 12px; }
+
+/* ── PRODUCT CARDS GRID ── */
+.prod-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.prod-card { background: #fff; border-radius: var(--card-radius); overflow: hidden; border: 1px solid #eee; transition: var(--transition); }
+.prod-card:hover { box-shadow: var(--shadow-lg); border-color: var(--border); }
+.prod-card-img { aspect-ratio: 1; background: #fafafa; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.prod-card-img img { max-height: 140px; object-fit: contain; }
+.prod-card-info { padding: 14px 16px 18px; }
+.prod-card-info h4 { font-size: 14px; font-weight: 600; line-height: 1.35; margin-bottom: 6px; color: var(--text); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.prod-card-stars { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
+.prod-card-stars .stars { color: #de7921; font-size: 13px; letter-spacing: 1px; }
+.prod-card-stars .count { font-size: 12px; color: var(--link); }
+.prod-card-price { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+.prod-card-price .cents { font-size: 12px; vertical-align: super; }
+.prod-card-price .was { font-size: 13px; color: var(--muted); text-decoration: line-through; font-weight: 400; margin-left: 8px; }
+.prod-card-badge { display: inline-block; background: #cc0c39; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; }
+.prod-card-ship { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.prod-card-ship b { color: var(--text); }
+.prod-card-btn { display: block; width: 100%; background: var(--yellow); border: none; padding: 8px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; transition: var(--transition); }
+.prod-card-btn:hover { background: var(--yellow-hover); }
+
+/* ── PARTNER ROW ── */
+.partner-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.partner-card { border-radius: var(--card-radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); cursor: pointer; }
+.partner-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.partner-card img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #f8f8f8; padding: 16px; }
+.partner-card-info { padding: 16px; background: #fff; }
+.partner-card-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.partner-card-info p { font-size: 13px; color: var(--muted); }
+
+/* ── STATS BAR ── */
+.stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--dk2); }
+.stat { padding: 36px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,.1); }
+.stat:last-child { border-right: none; }
+.stat .num { font-size: 36px; font-weight: 800; color: var(--teal); margin-bottom: 6px; }
+.stat p { color: rgba(255,255,255,.8); font-size: 13px; line-height: 1.4; }
+
+/* ── TRUSTED BY ── */
+.trusted-bar { background: #fff; padding: 40px 24px; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+.trusted-inner { max-width: 1440px; margin: 0 auto; text-align: center; }
+.trusted-inner p { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 24px; }
+.trusted-logos { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; opacity: .7; }
+.trusted-logos img { height: 32px; object-fit: contain; filter: grayscale(100%); transition: var(--transition); }
+.trusted-logos img:hover { filter: grayscale(0%); opacity: 1; }
+
+/* ── CTA BANNER ── */
+.cta-banner { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-hover) 50%, var(--teal-deep) 100%); padding: 56px 24px; text-align: center; }
+.cta-banner h2 { color: #fff; font-size: 30px; font-weight: 800; margin-bottom: 10px; }
+.cta-banner p { color: rgba(255,255,255,.9); font-size: 16px; margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.cta-banner a { display: inline-block; background: #fff; color: var(--teal-deep); font-size: 15px; font-weight: 700; padding: 12px 36px; border-radius: 24px; transition: var(--transition); }
+.cta-banner a:hover { background: #f0f0f0; transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+.ft { background: var(--dk2); color: #ddd; padding: 40px 24px; margin-top: 0; }
+.ft-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.ft h4 { color: #fff; font-size: 15px; margin-bottom: 14px; }
+.ft a { display: block; font-size: 13px; color: #ddd; margin-bottom: 8px; transition: var(--transition); }
+.ft a:hover { color: #fff; text-decoration: underline; }
+.ft-bottom { background: var(--dk); padding: 20px; text-align: center; }
+.ft-bottom p { color: #999; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ══ AMAZON HEADER ══ -->
+<header class="hd">
+  <div class="hd-logo"><b style="color:#00a8e1;font-size:24px;font-style:italic;">business</b><small style="color:#f90;font-size:15px;font-weight:700;font-style:italic;display:block;margin-top:-4px;">prime</small></div>
+  <div class="hd-loc" style="display:flex;align-items:center;gap:6px;">
+    <span style="font-size:16px;">&#9678;</span>
+    <div>Delivering to Palatine 60074<br><strong>Update location</strong></div>
+  </div>
+  <div class="hd-search">
+    <select><option>All</option></select>
+    <input placeholder="Search Keri Systems">
+    <button style="background:#3665f3;border-radius:0 4px 4px 0;"><svg viewBox="0 0 24 24" fill="#fff"><path d="M10 2a8 8 0 015.29 13.71l4.5 4.5-1.42 1.42-4.5-4.5A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"/></svg></button>
+  </div>
+  <div class="hd-r">
+    <div style="display:flex;align-items:center;gap:4px;"><span style="font-size:14px;">EN</span></div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="color:#e47911;font-size:18px;">&#128276;</span>
+      <div>Hello, sign in<strong>Account &amp; Lists &#9662;</strong></div>
+    </div>
+    <div>Returns<strong>&amp; Orders</strong></div>
+    <div class="cart"><span>3</span> &#128722;</div>
+  </div>
+</header>
+<div class="hd-sub">
+  <a href="#">&#9776; All</a><a href="#">Get the app &#9662;</a><a href="#">Business Essentials</a><a href="#">Same-Day Delivery</a><a href="#">Tax Supplies</a><a href="#">Climate Pledge Friendly</a><a href="#">Buy Again</a><a href="#" style="margin-left:auto;">Get same-day delivery</a><a href="#">Lists &#9662;</a><a href="#" style="color:#f90;font-weight:700;">Business Prime &#9662;</a>
+</div>
+
+<!-- ══ STORE NAV ══ -->
+<nav class="sn">
+  <a class="sn-brand" href="index.html">
+    <img src="assets/logos/keri-logo.svg" alt="Keri Systems" style="height:22px;">
+  </a>
+  <div class="sn-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="controllers.html">Controllers</a>
+    <a href="credentials.html">Credentials</a>
+    <a href="readers.html">Readers</a>
+  </div>
+</nav>
+
+<!-- ══ HERO BANNER (VIDEO) ══ -->
+<section class="hero">
+  <video autoplay muted loop playsinline poster="assets/hero/borealis-new.png" style="width:100%;height:100%;object-fit:cover;">
+    <source src="assets/hero/keri-overview.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay">
+    <div>
+      <div style="display:flex; align-items:center; gap:18px; margin-bottom:24px;">
+        <img src="assets/logos/keri-logo.webp" alt="Keri Systems" style="height:52px; object-fit:contain;">
+        <span style="width:2px; height:36px; background:rgba(255,255,255,.35); border-radius:1px;"></span>
+        <span style="color:#fff; font-size:20px; font-weight:300; letter-spacing:2px; text-transform:uppercase; opacity:.9;">For Business</span>
+      </div>
+      <h1>Secure Access,<br><em>Cloud-First</em></h1>
+      <p class="hero-sub">Enterprise-grade access control solutions trusted by Fortune 500 companies worldwide. Cloud-native. Mercury-powered. Built to scale.</p>
+      <a href="#featured" class="hero-btn">Explore Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS BAR ══ -->
+<div class="stats-bar">
+  <div class="stat"><div class="num">40+</div><p>years of access control innovation</p></div>
+  <div class="stat"><div class="num">10,000+</div><p>facilities secured worldwide</p></div>
+  <div class="stat"><div class="num">100%</div><p>cloud-native with Borealis platform</p></div>
+  <div class="stat"><div class="num">50+</div><p>countries with Keri installations</p></div>
+</div>
+
+<!-- ══ SHOP BY CATEGORY ══ -->
+<div class="section">
+  <h2 class="section-title">Shop by Category</h2>
+  <p class="section-subtitle">Complete access control ecosystem — from controllers to credentials</p>
+  <div class="cat-grid">
+    <a class="cat-card" href="controllers.html">
+      <div class="cat-card-img"><img src="assets/products/nxt-controller.png" alt="Controllers"></div>
+      <div class="cat-card-info"><h3>Controllers</h3><p>12 products</p></div>
+    </a>
+    <a class="cat-card" href="credentials.html">
+      <div class="cat-card-img"><img src="assets/products/keri-credentials-group.png" alt="Credentials"></div>
+      <div class="cat-card-info"><h3>Credentials &amp; Cards</h3><p>15 products</p></div>
+    </a>
+    <a class="cat-card" href="readers.html">
+      <div class="cat-card-img"><img src="assets/products/aurora-reader.png" alt="Readers"></div>
+      <div class="cat-card-info"><h3>Readers</h3><p>14 products</p></div>
+    </a>
+    <a class="cat-card" href="#">
+      <div class="cat-card-img"><img src="assets/hero/borealis-devices.png" alt="Software & Cloud"></div>
+      <div class="cat-card-info"><h3>Software &amp; Cloud</h3><p>6 products</p></div>
+    </a>
+  </div>
+</div>
+
+<!-- ══ WHAT'S NEW ══ -->
+<div class="section-alt">
+  <div class="section">
+    <h2 class="section-title">What's New</h2>
+    <p class="section-subtitle">The latest additions to the Keri Systems access control portfolio</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+      <div style="background:#f3f3f3; border-radius:var(--card-radius); padding:32px 24px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative;">
+        <span style="position:absolute;top:16px;right:16px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;">NEW</span>
+        <img src="assets/hero/borealis-devices.png" alt="Borealis Cloud" style="height:140px;object-fit:contain;margin-bottom:16px;">
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:6px;">Borealis Cloud Platform</h4>
+        <p style="font-size:13px;color:var(--muted);line-height:1.4;">Cloud-native access control — manage from any device, anywhere</p>
+      </div>
+      <div style="background:#f3f3f3; border-radius:var(--card-radius); padding:32px 24px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative;">
+        <span style="position:absolute;top:16px;right:16px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;">NEW</span>
+        <img src="assets/products/aurora-reader.png" alt="Aurora Reader" style="height:140px;object-fit:contain;margin-bottom:16px;">
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:6px;">Aurora Multi-Tech Reader</h4>
+        <p style="font-size:13px;color:var(--muted);line-height:1.4;">RFID, Bluetooth, NFC, Biometrics — one reader, every credential</p>
+      </div>
+      <div style="background:#f3f3f3; border-radius:var(--card-radius); padding:32px 24px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative;">
+        <span style="position:absolute;top:16px;right:16px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.5px;">NEW</span>
+        <img src="assets/products/kb-cloud-controller.png" alt="KB-Cloud Controller" style="height:140px;object-fit:contain;margin-bottom:16px;">
+        <h4 style="font-size:16px;font-weight:700;margin-bottom:6px;">KB-Cloud Controller</h4>
+        <p style="font-size:13px;color:var(--muted);line-height:1.4;">Purpose-built for Borealis — zero-touch cloud provisioning</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SHOP BY INTEREST ══ -->
+<div class="section">
+  <h2 class="section-title">Shop by Solution</h2>
+  <p class="section-subtitle">Tailored access control for every environment</p>
+
+  <div class="interest-row">
+    <div class="interest-hero">
+      <img src="assets/lifestyle/access-control-building.jpeg" alt="Enterprise Facilities">
+      <div class="interest-hero-overlay">
+        <h3>Enterprise Facilities</h3>
+        <p>Scalable access control for corporate campuses</p>
+      </div>
+    </div>
+    <div class="interest-products">
+      <a class="interest-prod-card" href="controllers.html">
+        <img src="assets/products/nxt-controller.png" alt="NXT Controller">
+        <span>NXT-4D Controller</span>
+      </a>
+      <a class="interest-prod-card" href="readers.html">
+        <img src="assets/products/aurora-reader.png" alt="Aurora Reader">
+        <span>Aurora ARC Reader</span>
+      </a>
+      <a class="interest-prod-card" href="credentials.html">
+        <img src="assets/products/nxt-credentials-group.png" alt="NXT Credentials">
+        <span>NXT Credentials</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="interest-row reverse">
+    <div class="interest-hero">
+      <img src="assets/hero/borealis-solution.png" alt="Cloud-Managed Access">
+      <div class="interest-hero-overlay">
+        <h3>Cloud-Managed Access</h3>
+        <p>Manage every door from anywhere with Borealis</p>
+      </div>
+    </div>
+    <div class="interest-products">
+      <a class="interest-prod-card" href="#">
+        <img src="assets/hero/borealis-devices.png" alt="Borealis">
+        <span>Borealis Cloud</span>
+      </a>
+      <a class="interest-prod-card" href="controllers.html">
+        <img src="assets/products/kb-cloud-controller.png" alt="KB-Cloud">
+        <span>KB-Cloud Controller</span>
+      </a>
+      <a class="interest-prod-card" href="#">
+        <img src="assets/lifestyle/borealis-mobile.png" alt="Mobile Credentials">
+        <span>Mobile Credentials</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="interest-row">
+    <div class="interest-hero">
+      <img src="assets/lifestyle/secure-facility.jpeg" alt="Multi-Tenant Properties">
+      <div class="interest-hero-overlay">
+        <h3>Multi-Tenant Properties</h3>
+        <p>Telephone entry &amp; visitor management at scale</p>
+      </div>
+    </div>
+    <div class="interest-products">
+      <a class="interest-prod-card" href="#">
+        <img src="assets/products/entraguard-titanium.jpg" alt="EntraGuard">
+        <span>EntraGuard Titanium</span>
+      </a>
+      <a class="interest-prod-card" href="readers.html">
+        <img src="assets/products/nxt-3r-reader.png" alt="NXT Reader">
+        <span>NXT-3R Reader</span>
+      </a>
+      <a class="interest-prod-card" href="credentials.html">
+        <img src="assets/products/keri-credentials-group.png" alt="Keri Credentials">
+        <span>Keri Prox Cards</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FULL-WIDTH BANNER ══ -->
+<div class="fw-banner" style="border-radius:0;">
+  <img src="assets/hero/borealis-ui-ipad.png" alt="Borealis Cloud Platform" style="width:100%; display:block; max-height:400px; object-fit:cover;">
+  <div class="fw-banner-overlay">
+    <div>
+      <h3>Borealis Cloud<br>Access Control</h3>
+      <p>No servers. No software installs. Manage access from any browser or mobile device.</p>
+      <a href="#" class="btn">Learn More</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SOLUTIONS GRID ══ -->
+<div class="section-alt">
+  <div class="section">
+    <h2 class="section-title">Access Control Solutions</h2>
+    <p class="section-subtitle">Purpose-built systems for every access scenario</p>
+    <div class="meeting-grid">
+      <a class="meeting-card" href="controllers.html">
+        <img src="assets/lifestyle/frame-12.jpg" alt="Corporate Access">
+        <div class="meeting-card-overlay">
+          <h4>Corporate Access</h4>
+          <p>NXT Controllers &middot; Aurora Readers</p>
+        </div>
+      </a>
+      <a class="meeting-card" href="readers.html">
+        <img src="assets/lifestyle/frame-13.jpg" alt="Secure Entry">
+        <div class="meeting-card-overlay">
+          <h4>Secure Entry</h4>
+          <p>Multi-Tech Readers &middot; Biometrics</p>
+        </div>
+      </a>
+      <a class="meeting-card" href="#">
+        <img src="assets/lifestyle/frame-14.jpg" alt="Cloud Management">
+        <div class="meeting-card-overlay">
+          <h4>Cloud Management</h4>
+          <p>Borealis &middot; Doors.NET</p>
+        </div>
+      </a>
+      <a class="meeting-card" href="#">
+        <img src="assets/lifestyle/doors-net-credential.jpg" alt="Visitor Management">
+        <div class="meeting-card-overlay">
+          <h4>Credential Management</h4>
+          <p>Cards &middot; Fobs &middot; Mobile</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SHOWCASE PAIR ══ -->
+<div class="section">
+  <div class="split-banner">
+    <div class="split-card">
+      <img src="assets/hero/doors-net-hero.jpg" alt="Doors.NET Software">
+      <div class="split-card-overlay">
+        <h4>Doors.NET Software</h4>
+        <p>Industry-leading on-premise access control management</p>
+      </div>
+    </div>
+    <div class="split-card">
+      <img src="assets/hero/mercury-featured.png" alt="Mercury Hardware">
+      <div class="split-card-overlay">
+        <h4>Mercury-Powered Hardware</h4>
+        <p>Open-platform controllers trusted by the industry</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INTEGRATION PARTNERS ══ -->
+<div class="section">
+  <h2 class="section-title">Integration Partners</h2>
+  <p class="section-subtitle">Seamless integration with industry-leading lock and access technologies</p>
+  <div class="partner-row">
+    <a class="partner-card" href="#">
+      <img src="assets/lifestyle/schlage.png" alt="Schlage Wireless Locks">
+      <div class="partner-card-info"><h4>Schlage Wireless Locks</h4><p>Allegion wireless lock integration for Doors.NET &amp; Borealis</p></div>
+    </a>
+    <a class="partner-card" href="#">
+      <img src="assets/lifestyle/simonsvoss.png" alt="SimonsVoss">
+      <div class="partner-card-info"><h4>SimonsVoss Euro Profile</h4><p>Digital SmartHandle wireless locking solutions</p></div>
+    </a>
+    <a class="partner-card" href="#">
+      <img src="assets/lifestyle/switchtech.png" alt="Switch Tech">
+      <div class="partner-card-info"><h4>Best Switch Tech</h4><p>Wireless lock integration with Best STANLEY hardware</p></div>
+    </a>
+  </div>
+</div>
+
+<!-- ══ FULL-WIDTH BANNER 2 ══ -->
+<div class="fw-banner" style="border-radius:0;">
+  <img src="assets/lifestyle/social-media-graphic.jpg" alt="Keri Systems" style="width:100%; display:block; max-height:360px; object-fit:cover;">
+  <div class="fw-banner-overlay">
+    <div>
+      <h3>Over 40 Years of<br>Access Control Excellence</h3>
+      <p>From proximity cards to cloud-native platforms — Keri Systems leads the industry.</p>
+      <a href="#" class="btn">View Case Studies</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FEATURED PRODUCTS ══ -->
+<div class="section-alt" id="featured">
+  <div class="section">
+    <h2 class="section-title">Featured Products</h2>
+    <p class="section-subtitle">Best sellers across the Keri Systems access control portfolio</p>
+    <div class="prod-grid">
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/nxt-controller.png" alt="NXT-4D Controller"></div>
+        <div class="prod-card-info">
+          <span class="prod-card-badge">Best Seller</span>
+          <h4>Keri Systems NXT-4D Mercury-Powered 4-Door Controller</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="count">87</span></div>
+          <div class="prod-card-price">$1,317<span class="cents">39</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/aurora-reader.png" alt="Aurora ARC Mullion Reader"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems Aurora ARC Mullion Multi-Tech Reader</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="count">142</span></div>
+          <div class="prod-card-price">$325<span class="cents">49</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/nxt-3r-reader.png" alt="NXT-3R Reader"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems NXT-3R Single-Gang Proximity Reader</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="count">234</span></div>
+          <div class="prod-card-price">$148<span class="cents">99</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/kb-cloud-controller.png" alt="KB-Cloud Controller"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems KB-Cloud 2D Borealis Controller</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="count">56</span></div>
+          <div class="prod-card-price">$548<span class="cents">58</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/keri-credentials-group.png" alt="NXT Credentials"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems NXT Clamshell Proximity Card (25-Pack)</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="count">312</span></div>
+          <div class="prod-card-price">$43<span class="cents">99</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/amz-ms5000-reader.jpg" alt="MS-5000 Reader"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems MS-5000 MiniStar Proximity Reader</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="count">45</span></div>
+          <div class="prod-card-price">$300<span class="cents">53</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/conekt-reader.png" alt="Conekt Reader"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems Conekt Mobile-Ready Bluetooth Reader</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="count">89</span></div>
+          <div class="prod-card-price">$279<span class="cents">00</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/pxl-500p.png" alt="PXL-500P Controller"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems PXL-500P Tiger II Proximity Controller</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="count">156</span></div>
+          <div class="prod-card-price">$1,185<span class="cents">90</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/amz-p500h-reader.jpg" alt="P-500-H Reader"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems P-500-H Alps Proximity Reader w/ HID</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="count">67</span></div>
+          <div class="prod-card-price">$272<span class="cents">97</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-img"><img src="assets/products/nxt-6rk-reader.png" alt="NXT-6RK Reader"></div>
+        <div class="prod-card-info">
+          <h4>Keri Systems NXT-6RK Pin &amp; Proximity Reader</h4>
+          <div class="prod-card-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="count">198</span></div>
+          <div class="prod-card-price">$189<span class="cents">99</span></div>
+          <button class="prod-card-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LIFESTYLE GRID ══ -->
+<div class="section">
+  <h2 class="section-title">Securing Modern Facilities</h2>
+  <p class="section-subtitle">See Keri Systems access control in action</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+    <div style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-md);">
+      <img src="assets/lifestyle/frame-12.jpg" alt="Access Control" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-md);">
+      <img src="assets/lifestyle/frame-13.jpg" alt="Secure Facility" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-md);">
+      <img src="assets/lifestyle/access-control-building.jpeg" alt="Building Access" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-md);">
+      <img src="assets/lifestyle/frame-14.jpg" alt="Cloud Management" style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESOURCES ══ -->
+<div class="section-alt">
+  <div class="section">
+    <h2 class="section-title">Resources &amp; Support</h2>
+    <p class="section-subtitle">Everything you need to design, deploy, and manage your access control system</p>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;">
+      <a href="#" style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); display:block; position:relative;">
+        <img src="assets/lifestyle/user-guide.png" alt="User Guides" style="width:100%; aspect-ratio:1; object-fit:cover; display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.75));"><span style="color:#fff;font-size:14px;font-weight:700;">User Guides</span></div>
+      </a>
+      <a href="#" style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); display:block; position:relative;">
+        <img src="assets/lifestyle/guided-support.jpeg" alt="Guided Support" style="width:100%; aspect-ratio:1; object-fit:cover; display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.75));"><span style="color:#fff;font-size:14px;font-weight:700;">Guided Support</span></div>
+      </a>
+      <a href="#" style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); display:block; position:relative;">
+        <img src="assets/lifestyle/knowledge-base.png" alt="Knowledge Base" style="width:100%; aspect-ratio:1; object-fit:cover; display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.75));"><span style="color:#fff;font-size:14px;font-weight:700;">Knowledge Base</span></div>
+      </a>
+      <a href="#" style="border-radius:var(--card-radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:var(--transition); display:block; position:relative;">
+        <img src="assets/lifestyle/doors-net-thumb.png" alt="Software Downloads" style="width:100%; aspect-ratio:1; object-fit:cover; display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.75));"><span style="color:#fff;font-size:14px;font-weight:700;">Software Downloads</span></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TRUSTED BY ══ -->
+<div class="trusted-bar">
+  <div class="trusted-inner">
+    <p>Trusted by Industry Leaders</p>
+    <div class="trusted-logos">
+      <img src="assets/logos/loreal.png" alt="L'Oreal">
+      <img src="assets/logos/lexmark.png" alt="Lexmark">
+      <img src="assets/logos/continental.png" alt="Continental">
+      <img src="assets/logos/bose.png" alt="Bose">
+      <img src="assets/logos/neovia.png" alt="Neovia">
+      <img src="assets/logos/hunter.png" alt="Hunter">
+    </div>
+  </div>
+</div>
+
+<!-- ══ CTA BANNER ══ -->
+<div class="cta-banner">
+  <h2>Ready to Secure Your Facility?</h2>
+  <p>Enterprise pricing, system design consultation, and bulk ordering available exclusively for business customers.</p>
+  <a href="#">Contact Keri Systems</a>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="ft">
+  <div class="ft-inner">
+    <div>
+      <h4>Keri Systems</h4>
+      <a href="#">About Keri Systems</a>
+      <a href="#">Enterprise Solutions</a>
+      <a href="#">Case Studies</a>
+      <a href="#">Authorized Dealers</a>
+    </div>
+    <div>
+      <h4>Product Categories</h4>
+      <a href="controllers.html">Controllers</a>
+      <a href="credentials.html">Credentials &amp; Cards</a>
+      <a href="readers.html">Readers</a>
+      <a href="#">Software &amp; Cloud</a>
+    </div>
+    <div>
+      <h4>Solutions</h4>
+      <a href="#">Borealis Cloud</a>
+      <a href="#">Doors.NET</a>
+      <a href="#">EntraGuard</a>
+      <a href="#">Integrations</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a href="#">Technical Support</a>
+      <a href="#">Training &amp; Webinars</a>
+      <a href="#">Documentation</a>
+      <a href="#">Contact Sales</a>
+    </div>
+  </div>
+</footer>
+<div class="ft-bottom"><p>&copy; 2026 Keri Systems. All rights reserved. Keri Systems and their logos are trademarks of Keri Systems, Inc.</p></div>
+
+</body>
+</html>
